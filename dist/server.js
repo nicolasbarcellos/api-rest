@@ -1,0 +1,31 @@
+import 'dotenv/config';
+import Fastify from 'fastify';
+import swagger from '@fastify/swagger';
+import swaggerUi from '@fastify/swagger-ui';
+import cors from '@fastify/cors';
+import { validatorCompiler, serializerCompiler, jsonSchemaTransform, } from 'fastify-type-provider-zod';
+import { healthRoutes } from './routes/health';
+import { userRoutes } from './routes/users';
+import cookie from '@fastify/cookie';
+const app = Fastify({ logger: true });
+// zod as validator and serializer
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+// swagger reading from zod transforms
+await app.register(swagger, {
+    openapi: {
+        info: { title: 'API REST with Fastify', version: '1.0.0' },
+    },
+    transform: jsonSchemaTransform,
+});
+await app.register(cors);
+await app.register(cookie);
+await app.register(swaggerUi, { routePrefix: '/docs' });
+// Allow type inference globally in all routes of the app below this line
+const zapp = app.withTypeProvider();
+const port = Number(process.env.PORT ?? 3002);
+await app.register(healthRoutes);
+await app.register(userRoutes);
+await app.listen({ port, host: '0.0.0.0' });
+app.log.info(`Docs: http://localhost:${port}/docs`);
+//# sourceMappingURL=server.js.map
