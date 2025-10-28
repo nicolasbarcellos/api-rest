@@ -73,3 +73,13 @@ export const mealParamsSchema = z.object({
 });
 
 export type MealParamsSchemaT = z.infer<typeof mealParamsSchema>;
+
+// Metrics Schema
+export const metricsSchema = z.object({
+  totalMeals: z.number(),
+  mealsOnDiet: z.number(),
+  mealsOffDiet: z.number(),
+  bestStreak: z.number(),
+});
+
+export type MetricsSchemaT = z.infer<typeof metricsSchema>;

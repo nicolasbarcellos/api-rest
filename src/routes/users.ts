@@ -103,7 +103,7 @@ export async function userRoutes(app: FastifyInstance) {
         const verificationCode = generateVerificationCode();
         const codeExpiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutos
 
-        const createUser = await prisma.user.create({
+        await prisma.user.create({
           data: {
             name,
             email,
@@ -384,8 +384,6 @@ export async function userRoutes(app: FastifyInstance) {
           },
         });
 
-        console.log("User encontrado?", user);
-
         if (!user) {
           return res.code(401).send({
             error: "Invalid credentials",
@@ -436,7 +434,7 @@ export async function userRoutes(app: FastifyInstance) {
         });
       } catch (error) {
         const errorMessage =
-          error instanceof Error ? error.message : "Unkown error";
+          error instanceof Error ? error.message : "Unknown error";
 
         res.code(500).send({
           error: "Internal Server Error",

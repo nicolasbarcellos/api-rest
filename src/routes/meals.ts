@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
-import { mealSchema, createMealSchema } from "../schemas";
+import { mealSchema, createMealSchema, updateMealSchema } from "../schemas";
 import z from "zod";
 import { authValidate } from "../middleware/auth";
 
@@ -211,7 +211,7 @@ export async function mealsRoutesAuth(app: FastifyInstance) {
       schema: {
         description: "Update a meal by id",
         tags: ["meals"],
-        body: createMealSchema,
+        body: updateMealSchema,
         response: {
           200: z.object({
             meal: mealSchema,
@@ -238,6 +238,7 @@ export async function mealsRoutesAuth(app: FastifyInstance) {
     async (req, res) => {
       const { id } = req.params as { id: string };
       const userId = req.user.id;
+      const { date, ...rest } = req.body;
 
       if (!id) {
         return res.code(400).send({
@@ -247,6 +248,45 @@ export async function mealsRoutesAuth(app: FastifyInstance) {
       }
 
       try {
+        const mealUpdated = await prisma.meal.updateMany({
+          where: {
+            id,
+            userId,
+          },
+          data: {
+            ...rest,
+            ...(date && { date: new Date(date) }),
+          } as any,
+        });
+
+        if (mealUpdated.count === 0) {
+          return res.code(404).send({
+            error: "Not found",
+            message: "Refeição não encontrada",
+          });
+        }
+
+        const meal = await prisma.meal.findUnique({
+          where: {
+            id,
+          },
+        });
+
+        if (!meal) {
+          return res.code(404).send({
+            error: "Not found",
+            message: "Refeição não encontrada",
+          });
+        }
+
+        return res.code(200).send({
+          meal: {
+            ...meal,
+            date: meal.date.toISOString(),
+            createdAt: meal.createdAt.toISOString(),
+            updatedAt: meal.updatedAt.toISOString(),
+          },
+        });
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : "Erro desconhecido";

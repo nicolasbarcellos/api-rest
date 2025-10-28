@@ -13,6 +13,7 @@ import { healthRoutes } from "./routes/health";
 import { userRoutes } from "./routes/users";
 import cookie from "@fastify/cookie";
 import { mealsRoutesAuth } from "./routes/meals";
+import { metricsRoutesAuth } from "./routes/metrics";
 
 const app = Fastify({ logger: true });
 
@@ -42,6 +43,8 @@ await app.register(healthRoutes);
 await app.register(userRoutes);
 
 await app.register(mealsRoutesAuth);
+
+await app.register(metricsRoutesAuth);
 
 await app.listen({ port, host: "0.0.0.0" });
 
