@@ -4,7 +4,13 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 const prisma = new PrismaClient();
 
 export async function authValidate(req: FastifyRequest, res: FastifyReply) {
-  const sessionId = req.cookies.sessionId;
+  // Aceita sessionId de múltiplas fontes (cookies, headers)
+  const sessionId =
+    req.cookies.sessionId ||
+    req.headers['x-session-id'] as string ||
+    (req.headers.authorization?.startsWith('Bearer ')
+      ? req.headers.authorization.replace('Bearer ', '')
+      : undefined);
 
   if (!sessionId) {
     return res.code(401).send({

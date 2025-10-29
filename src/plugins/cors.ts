@@ -31,6 +31,6 @@ export default fp(async (app) => {
     },
     credentials: true, // Permite cookies
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "x-api-key"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-api-key", "x-session-id"],
   });
 });
