@@ -9,11 +9,11 @@ import {
   jsonSchemaTransform,
 } from "fastify-type-provider-zod";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
-import { healthRoutes } from "./routes/health";
-import { userRoutes } from "./routes/users";
+import { healthRoutes } from "./routes/health.js";
+import { userRoutes } from "./routes/users.js";
 import cookie from "@fastify/cookie";
-import { mealsRoutesAuth } from "./routes/meals";
-import { metricsRoutesAuth } from "./routes/metrics";
+import { mealsRoutesAuth } from "./routes/meals.js";
+import { metricsRoutesAuth } from "./routes/metrics.js";
 
 const app = Fastify({ logger: true });
 

@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
-import { formatUpTime } from "../utils/formatUpTime";
+import { formatUpTime } from "../utils/formatUpTime.js";
 
 export async function healthRoutes(app: FastifyInstance) {
   const zapp = app.withTypeProvider<ZodTypeProvider>();

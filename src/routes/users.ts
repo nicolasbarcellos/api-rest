@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
-import { createUserSchema, userSchema } from "../schemas";
+import { createUserSchema, userSchema } from "../schemas/index.js";
 import { z } from "zod";
-import { validateApiKey } from "../hooks/auth";
+import { validateApiKey } from "../hooks/auth.js";
 import bcrypt from "bcryptjs";
-import { generateVerificationCode } from "../utils/generateCode";
-import { sendVerificationEmail } from "../utils/sendEmail";
+import { generateVerificationCode } from "../utils/generateCode.js";
+import { sendVerificationEmail } from "../utils/sendEmail.js";
 
 const prisma = new PrismaClient();
 

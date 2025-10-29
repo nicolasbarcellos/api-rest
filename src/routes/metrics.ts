@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
-import { authValidate } from "../middleware/auth";
+import { authValidate } from "../middleware/auth.js";
 import z from "zod";
-import { metricsSchema } from "../schemas";
+import { metricsSchema } from "../schemas/index.js";
 
 const prisma = new PrismaClient();
 

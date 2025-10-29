@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
-import { mealSchema, createMealSchema, updateMealSchema } from "../schemas";
+import { mealSchema, createMealSchema, updateMealSchema } from "../schemas/index.js";
 import z from "zod";
-import { authValidate } from "../middleware/auth";
+import { authValidate } from "../middleware/auth.js";
 
 const prisma = new PrismaClient();
 
