@@ -21,7 +21,8 @@ export default fp(async (app) => {
       if (
         allowedOrigins.includes(origin) ||
         origin.includes("lovable.app") ||
-        origin.includes("lovable.dev")
+        origin.includes("lovable.dev") ||
+        origin.includes("lovableproject.com")
       ) {
         callback(null, true);
       } else {
