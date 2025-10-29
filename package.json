@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc && npx prisma generate",
-    "start": "node dist/server.js",
+    "build": "npx prisma generate",
+    "start": "tsx src/server.ts",
     "postinstall": "npx prisma generate"
   },
   "keywords": [],
@@ -24,14 +24,14 @@
     "dotenv": "^17.2.3",
     "fastify": "^5.6.1",
     "fastify-type-provider-zod": "^6.0.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
     "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^24.8.1",
     "prisma": "^6.17.1",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+    "ts-node": "^10.9.2"
   }
 }
