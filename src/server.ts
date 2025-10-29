@@ -2,7 +2,7 @@ import "dotenv/config";
 import Fastify from "fastify";
 import swagger from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
-import cors from "@fastify/cors";
+import corsPlugin from "./plugins/cors.js";
 import {
   validatorCompiler,
   serializerCompiler,
@@ -29,7 +29,7 @@ await app.register(swagger, {
   transform: jsonSchemaTransform,
 });
 
-await app.register(cors);
+await app.register(corsPlugin);
 await app.register(cookie);
 await app.register(swaggerUi, { routePrefix: "/docs" });
 
